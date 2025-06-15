@@ -1,0 +1,66 @@
+package game;
+
+import java.io.IOException;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.*;
+
+@WebServlet("/guess")
+public class GuessingGameServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        response.setContentType("text/html");
+        HttpSession session = request.getSession();
+
+        Integer number = (Integer) session.getAttribute("numberToGuess");
+        Integer attempts = (Integer) session.getAttribute("attempts");
+
+        if (number == null) {
+            number = (int)(Math.random() * 100) + 1;
+            attempts = 0;
+            session.setAttribute("numberToGuess", number);
+            session.setAttribute("attempts", attempts);
+        }
+
+        String message = request.getParameter("message") != null ? request.getParameter("message") : "";
+
+        response.getWriter().println(
+            "<html><head><title>Guessing Game</title></head><body>" +
+            "<h2>Guess the Number (1-100)</h2>" +
+            "<form method='post' action='guess'>" +
+            "<input type='number' name='guess' required>" +
+            "<input type='submit' value='Guess'>" +
+            "</form>" +
+            "<p style='color:blue;'>" + message + "</p>" +
+            "</body></html>"
+        );
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        HttpSession session = request.getSession();
+        Integer number = (Integer) session.getAttribute("numberToGuess");
+        Integer attempts = (Integer) session.getAttribute("attempts");
+
+        int guess = Integer.parseInt(request.getParameter("guess"));
+        attempts++;
+        session.setAttribute("attempts", attempts);
+
+        String message;
+        if (guess < number) {
+            message = "Too low!";
+        } else if (guess > number) {
+            message = "Too high!";
+        } else {
+            message = "🎉 Correct! You guessed it in " + attempts + " attempts.";
+            session.removeAttribute("numberToGuess");
+            session.removeAttribute("attempts");
+        }
+
+        response.sendRedirect("guess?message=" + java.net.URLEncoder.encode(message, "UTF-8"));
+    }
+}

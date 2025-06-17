@@ -56,7 +56,7 @@ public class GuessingGameServlet extends HttpServlet {
         } else if (guess > number) {
             message = "Too high!";
         } else {
-            message = "🎉 Correct! You guessed it in " + attempts + " attempts.";
+            message = " Correct! You guessed it in " + attempts + " attempts.";
             session.removeAttribute("numberToGuess");
             session.removeAttribute("attempts");
         }

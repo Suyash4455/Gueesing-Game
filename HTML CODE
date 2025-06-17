@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sudoku Solver</title>
+</head>
+<body>
+    <h2>Enter Sudoku Puzzle (0 or empty for blank cells)</h2>
+    <form method="post" action="solve">
+        <table border="1" cellpadding="5">
+            <!-- 9x9 Grid Input -->
+            <!-- Each input named "cell" so servlet gets an array of 81 values -->
+            <!-- JavaScript-style loop not supported in HTML, so we write static HTML -->
+            <!-- You can copy-paste this structure for 9 rows -->
+            <!-- Sample row -->
+            <tbody>
+            <!-- Use static HTML to create 9x9 grid -->
+            <!-- Row 1 -->
+            <tr>
+                <td><input type="text" name="cell" maxlength="1" size="1" /></td>
+                <td><input type="text" name="cell" maxlength="1" size="1" /></td>
+                <td><input type="text" name="cell" maxlength="1" size="1" /></td>
+                <td><input type="text" name="cell" maxlength="1" size="1" /></td>
+                <td><input type="text" name="cell" maxlength="1" size="1" /></td>
+                <td><input type="text" name="cell" maxlength="1" size="1" /></td>
+                <td><input type="text" name="cell" maxlength="1" size="1" /></td>
+                <td><input type="text" name="cell" maxlength="1" size="1" /></td>
+                <td><input type="text" name="cell" maxlength="1" size="1" /></td>
+            </tr>
+            <!-- Repeat this row 8 more times -->
+            <!-- You can use copy-paste for a full 9x9 grid -->
+            </tbody>
+        </table>
+        <br>
+        <input type="submit" value="Solve Sudoku" />
+    </form>
+</body>
+</html>
